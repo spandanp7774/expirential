@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Sneaker Store</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://jsdelivr.net" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; color: #111; }
+        .card { border: none; border-radius: 24px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); }
+        
+        /* Gallery */
+        .main-img-container { background: #f0f0f0; border-radius: 20px; overflow: hidden; height: 450px; display: flex; align-items: center; justify-content: center; }
+        #main-shoe-img { max-width: 90%; transition: transform 0.4s ease; }
+        .main-img-container:hover #main-shoe-img { transform: scale(1.1) rotate(-5deg); }
+        .thumb-img { width: 80px; height: 80px; cursor: pointer; border-radius: 12px; border: 2px solid transparent; object-fit: contain; background: #fff; transition: 0.2s; }
+        .thumb-img.active { border-color: #000; }
+
+        /* Stepper */
+        .progress { height: 6px; border-radius: 10px; margin-bottom: 30px; }
+        .progress-bar { background-color: #000; }
+
+        /* Custom Radio Buttons */
+        .btn-check:checked + .btn-outline-dark { background-color: #000; color: #fff; }
+        .btn-outline-dark { border-radius: 10px; font-weight: 600; padding: 10px 20px; }
+
+        /* Buy Button */
+        .btn-buy { background: #000; color: #fff; border-radius: 50px; padding: 15px 30px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+        .btn-buy:hover { background: #333; transform: scale(1.02); color: #fff; }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            
+            <!-- Progress Bar -->
+            <div class="progress mb-5">
+                <div id="step-progress" class="progress-bar" role="progressbar" style="width: 33%"></div>
+            </div>
+
+            <div class="card p-4 p-md-5">
+                
+                <!-- PAGE 1: PRODUCT -->
+                <div id="product-page" class="row g-5">
+                    <div class="col-md-6">
+                        <div class="main-img-container mb-3">
+                            <img id="main-shoe-img" src="sneaker-main.jpg" alt="Product">
+                        </div>
+                        <div class="d-flex gap-2 justify-content-center" id="thumbs">
+                            <img src="sneaker-back.jpg" class="thumb-img active" onclick="updateMain(this)">
+                            <img src="sneaker-main.jpg" class="thumb-img" onclick="updateMain(this)">
+                            <img src="sneaker-side.jpg" class="thumb-img" onclick="updateMain(this)">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <span class="badge bg-danger mb-2">New Arrival</span>
+                        <h1 class="display-5 fw-bold mb-0">Nike Air Max 90</h1>
+                        <p class="text-muted">Men's Shoes</p>
+                        <h3 class="fw-bold mb-4">$129.99</h3>
+
+                        <div class="mb-4">
+                            <label class="fw-bold mb-2">Select Color</label><br>
+                            <div class="btn-group" role="group">
+                                <input type="radio" class="btn-check" name="color" id="color1" value="white" checked onchange="changeColor('white')">
+                                <label class="btn btn-outline-dark" for="color1">White</label>
+                                <input type="radio" class="btn-check" name="color" id="color2" value="black" onchange="changeColor('black')">
+                                <label class="btn btn-outline-dark" for="color2">Black</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="fw-bold mb-2">Select Size</label><br>
+                            <div class="d-flex flex-wrap gap-2">
+                                <input type="radio" class="btn-check" name="size" id="s9" value="9"><label class="btn btn-outline-dark" for="s9">9</label>
+                                <input type="radio" class="btn-check" name="size" id="s10" value="10"><label class="btn btn-outline-dark" for="s10">10</label>
+                                <input type="radio" class="btn-check" name="size" id="s11" value="11"><label class="btn btn-outline-dark" for="s11">11</label>
+                            </div>
+                        </div>
+
+                        <button id="add-to-cart" class="btn btn-buy w-100 shadow">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- PAGE 2: SHIPPING -->
+                <div id="shipping-page" class="hidden py-4 text-center">
+                    <h2 class="fw-bold mb-4">Shipping Information</h2>
+                    <div class="col-md-8 mx-auto">
+                        <input type="text" class="form-control form-control-lg mb-3" id="cust-name" placeholder="Full Name">
+                        <textarea id="address" class="form-control form-control-lg mb-4" rows="3" placeholder="Shipping Address"></textarea>
+                        <button id="order-now" class="btn btn-buy w-100">Complete Purchase</button>
+                    </div>
+                </div>
+
+                <!-- PAGE 3: FEEDBACK -->
+                <div id="feedback-page" class="hidden py-5 text-center">
+                    <div class="mb-4">
+                        <svg xmlns="http://w3.org" width="80" height="80" fill="currentColor" class="bi bi-check-circle-fill text-success" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                        </svg>
+                    </div>
+                    <h1 class="fw-bold">Success!</h1>
+                    <p class="text-muted lead">Your order is on the way.</p>
+                    <button class="btn btn-outline-dark mt-4" onclick="location.reload()">Return to Shop</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const shoeData = {
+        white: [
+            "https://nike.com",
+            "https://nike.com",
+            "https://nike.com"
+        ],
+        black: [
+            "sneaker-back.jpg",
+            "sneaker-main.jpg",
+            "https://nike.com"
+        ]
+    };
+
+    function updateMain(el) {
+        document.getElementById('main-shoe-img').src = el.src;
+        document.querySelectorAll('.thumb-img').forEach(img => img.classList.remove('active'));
+        el.classList.add('active');
+    }
+
+    function changeColor(color) {
+        const images = shoeData[color];
+        const thumbImgs = document.querySelectorAll('.thumb-img');
+        thumbImgs.forEach((img, i) => img.src = images[i]);
+        updateMain(thumbImgs[0]);
+    }
+
+    document.getElementById('add-to-cart').onclick = () => {
+        document.getElementById('product-page').classList.add('hidden');
+        document.getElementById('shipping-page').classList.remove('hidden');
+        document.getElementById('step-progress').style.width = '66%';
+    };
+
+    document.getElementById('order-now').onclick = () => {
+        if(document.getElementById('address').value.trim() === "") {
+            alert("Please provide an address");
+            return;
+        }
+        document.getElementById('shipping-page').classList.add('hidden');
+        document.getElementById('feedback-page').classList.remove('hidden');
+        document.getElementById('step-progress').style.width = '100%';
+    };
+</script>
+
+</body>
+</html>
