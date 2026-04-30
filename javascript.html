@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: 'Arial', sans-serif; text-align: center; }
+        .container { max-width: 500px; margin: auto; padding: 20px; }
+        .hidden { display: none; }
+        #zoom-container { overflow: hidden; border: 1px solid #ddd; }
+        #product-img { width: 100%; transition: transform 0.3s; cursor: crosshair; }
+        #product-img:hover { transform: scale(1.5); }
+        .success-msg { color: green; font-weight: bold; margin-top: 10px; }
+        .conf-box { background: #e8f5e9; padding: 20px; border-radius: 10px; }
+    </style>
+</head>
+<body>
+    <div id="product-page" class="container">
+        <h1>Sneaker Store</h1>
+        <div id="zoom-container">
+            <img id="product-img" src="https://unsplash.com" alt="Sneaker">
+        </div>
+        <div id="cart-feedback" class="success-msg hidden">Item added to cart! ✓</div>
+        <button onclick="addToCart()">Add to Cart</button>
+        <button onclick="showShipping()">Buy Now</button>
+    </div>
+
+    <div id="shipping-page" class="container hidden">
+        <h2>Shipping Information</h2>
+        <input type="text" placeholder="Full Name"><br><br>
+        <input type="text" placeholder="Street Address"><br><br>
+        <button onclick="confirmOrder()">Submit Order</button>
+    </div>
+
+    <div id="confirmation-page" class="container hidden">
+        <div class="conf-box">
+            <h2>Success!</h2>
+            <p>Your order is confirmed. Thank you for shopping!</p>
+        </div>
+    </div>
+
+    <script>
+        function addToCart() {
+            const feedback = document.getElementById('cart-feedback');
+            feedback.classList.remove('hidden');
+            setTimeout(() => feedback.classList.add('hidden'), 2000);
+        }
+        function showShipping() {
+            document.getElementById('product-page').classList.add('hidden');
+            document.getElementById('shipping-page').classList.remove('hidden');
+        }
+        function confirmOrder() {
+            document.getElementById('shipping-page').classList.add('hidden');
+            document.getElementById('confirmation-page').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
